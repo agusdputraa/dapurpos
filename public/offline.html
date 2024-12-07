@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#16a34a">
+    <title>Offline - Dapur Cashier</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f9fafb;
+            color: #1f2937;
+            padding: 1rem;
+        }
+        
+        .container {
+            text-align: center;
+            padding: 2rem;
+            background-color: white;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            width: 100%;
+            max-width: 400px;
+        }
+        
+        .icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 1.5rem;
+            color: #16a34a;
+        }
+        
+        h1 {
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        
+        p {
+            color: #4b5563;
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+        }
+        
+        button {
+            background-color: #16a34a;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1rem;
+            transition: background-color 0.2s;
+        }
+        
+        button:hover {
+            background-color: #15803d;
+        }
+        
+        .status {
+            margin-top: 1rem;
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: #1f2937;
+                color: #f9fafb;
+            }
+            
+            .container {
+                background-color: #374151;
+            }
+            
+            p {
+                color: #9ca3af;
+            }
+            
+            .status {
+                color: #9ca3af;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                  d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z">
+            </path>
+        </svg>
+        <h1>You're Offline</h1>
+        <p>Don't worry! The app will continue to work with your cached data. Any changes you make will be synchronized when you're back online.</p>
+        <button onclick="checkConnection()">Try Again</button>
+        <div class="status" id="status"></div>
+    </div>
+    <script>
+        function checkConnection() {
+            const statusEl = document.getElementById('status');
+            statusEl.textContent = 'Checking connection...';
+            
+            if (navigator.onLine) {
+                statusEl.textContent = 'You\'re back online! Redirecting...';
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000);
+            } else {
+                statusEl.textContent = 'Still offline. Please check your connection.';
+            }
+        }
+
+        window.addEventListener('online', () => {
+            const statusEl = document.getElementById('status');
+            statusEl.textContent = 'You\'re back online! Redirecting...';
+            setTimeout(() => {
+                window.location.reload();
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
